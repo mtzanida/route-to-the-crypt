@@ -9,11 +9,11 @@ An educational, interactive cloud-routing scenario simulator built for Kiroween 
 
 Route to the Crypt gives cloud learners a safe place to explore a few curated routing and endpoint-health scenarios. Change a scenario, inspect the illustrative traffic path, and read a plain-language debrief.
 
-This is a deterministic educational model. It does not connect to AWS, deploy infrastructure, or claim to reproduce every AWS Global Accelerator behavior. Scenario rules will be checked against public AWS documentation and linked in the app before submission.
+This is a deterministic educational model. The core game does not connect to AWS or deploy infrastructure. An optional local-only Scenario Vault uses AWS Emulator S3 APIs to save and restore snapshots; it does not reproduce AWS Global Accelerator behavior. Scenario rules will be checked against public AWS documentation and linked in the app before submission.
 
 ## Run locally
 
-Requirements: Node.js 20 or newer.
+Requirements: Node.js 22 or newer.
 
 ```bash
 npm install
@@ -21,6 +21,30 @@ npm run dev
 ```
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
+
+## Optional local Scenario Vault
+
+Save a scenario into emulated S3, change endpoint health, then restore it. This lab
+uses a loopback-only Python bridge and authenticated AWS Emulator. It creates no
+real AWS resources and has no cloud fallback. The public production build remains
+static and excludes the local vault controls.
+
+See [local lab setup and cost boundaries](docs/LOCAL_LAB.md),
+[verification evidence](docs/VERIFICATION.md) and
+[Kiro evidence still to collect](docs/KIRO_EVIDENCE.md).
+
+```mermaid
+flowchart TD
+    UI["React scenario UI"]
+    Model["Local teaching model"]
+    Bridge["Optional loopback Python bridge"]
+    Emulator["Local AWS Emulator: S3 API"]
+    UI -->|"Health controls"| Model
+    UI -->|"Dev-only save / restore"| Bridge
+    Bridge -->|"Signed local requests"| Emulator
+    Emulator -->|"Snapshot data"| Bridge
+    Bridge -->|"Validated health states"| UI
+```
 
 ## Kiro development notes
 

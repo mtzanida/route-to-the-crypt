@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import ScenarioVault from './components/ScenarioVault'
 import { Activity, ArrowDownToLine, ArrowRight, Check, CircleHelp, Ghost, HeartPulse, Moon, Radio, ShieldAlert, Sparkles, Zap } from 'lucide-react'
 import { scenarios, type Endpoint } from './data/scenarios'
 import { chooseIllustrativeEndpoint, exportScenarioSnapshot } from './lib/scenarioModel'
@@ -117,6 +118,7 @@ export default function App() {
           </div>
           <div className="lesson-box"><span className="section-kicker">THE DEBRIEF</span><p>{selected.lesson}</p></div>
           <button className="export-button" onClick={downloadSnapshot}><ArrowDownToLine size={16} /> Export scenario JSON</button>
+          {import.meta.env.DEV && <ScenarioVault key={selected.id} scenarioId={selected.id} scenarioTitle={selected.title} endpoints={endpoints} activeEndpointId={activeEndpoint?.id ?? null} onRestore={setEndpoints} />}
           <div className="crew-card"><div className="crew-card-icon"><Sparkles size={15} /></div><div><strong>Crew Debrief</strong><p>Optional Kiro Crew add-on. The core lab works without it.</p><span className="coming-soon">STRETCH FEATURE</span></div></div>
         </aside>
       </div>

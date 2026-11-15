@@ -12,7 +12,7 @@ Build a complete, memorable learning experience for cloud learners who want to r
 
 Route to the Crypt is a spooky control-room simulator. A learner chooses a curated scenario, changes an endpoint health state, watches the illustrative route update, and gets a short explanation of the outcome and the model's assumptions.
 
-It is not a production emulator and will not use AWS credentials or make live AWS changes. All scenario behavior is local and deterministic. Every AWS-specific claim must be verified against official documentation and linked in the final app.
+It is not a production emulator and will not use AWS credentials or make live AWS changes. All routing scenario behavior is local and deterministic. Owner-authorized extension: an optional local AWS Emulator S3 vault saves and restores scenario snapshots through a loopback bridge; it does not deploy to AWS or validate routing behavior. Every AWS-specific claim must be verified against official documentation and linked in the final app.
 
 ## Audience and problem
 
