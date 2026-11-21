@@ -1,37 +1,26 @@
 # Route to the Crypt
 
-An educational, interactive cloud-routing scenario simulator built for Kiroween 2026.
+An interactive cloud-routing learning prototype built with React, TypeScript and Vite. Change endpoint health, inspect the highlighted route and export a scenario snapshot.
 
-**Category:** Frankenstein  
-**Status:** Early prototype, started during the Kiroween 2026 submission period.
+**Status:** A deterministic browser model for Kiroween 2026. It does not route real traffic or connect to AWS. The local AWS Emulator integration is proposed separately in PR #1.
 
-## What it is
+## Architecture
 
-Route to the Crypt gives cloud learners a safe place to explore a few curated routing and endpoint-health scenarios. Change a scenario, inspect the illustrative traffic path, and read a plain-language debrief.
-
-This is a deterministic educational model. It does not connect to AWS, deploy infrastructure, or claim to reproduce every AWS Global Accelerator behavior. Scenario rules will be checked against public AWS documentation and linked in the app before submission.
-
-## Run locally
-
-Requirements: Node.js 20 or newer.
-
-```bash
-npm install
-npm run dev
+```mermaid
+flowchart TD
+  Learner["Learner changes scenario or endpoint health"] --> UI["React browser interface"]
+  Scenarios["Curated TypeScript scenarios"] --> UI
+  UI --> Model["Deterministic endpoint selection"]
+  Model --> View["Illustrative route and learning debrief"]
+  Model --> Snapshot["JSON scenario snapshot"]
+  View --> Learner
+  Snapshot --> Download["Local browser download"]
 ```
 
-Create a production build with `npm run build` and preview it with `npm run preview`.
+## Start here
 
-## Kiro development notes
+Run `npm install`, then `npm run dev`; use `npm run build` for the static bundle. Read [scenarioModel.ts](src/lib/scenarioModel.ts), [scenarios.ts](src/data/scenarios.ts) and [PROJECT_PLAN.md](PROJECT_PLAN.md). The [optional Crew Debrief](optional-crew-debrief/README.md) and [emulator PR](https://github.com/mtzanida/route-to-the-crypt/pull/1) describe separate work.
 
-The `.kiro/` directory contains the product steering and spec. Keep it in the public repository. The optional Crew Debrief experiment is intentionally outside the core runtime; the main app must remain useful when that experiment is absent.
+[Previous README and detailed reference](https://github.com/mtzanida/route-to-the-crypt/blob/5970d7a13c1bb8a364b9049009ebc49e542c1e6e/README.md) are retained in Git history. They may describe older assumptions or unmerged plans; the scope above reflects this branch.
 
-The initial scaffold was drafted with ChatGPT on October 31, 2026. Continue the feature work in Kiro and describe only Kiro actions that were actually used in the final submission.
-
-## Optional Crew Debrief
-
-The core app exports a versioned scenario snapshot as JSON. A separate Kiro Crew app may consume that snapshot and produce an extra learning debrief. It is a stretch feature, not a runtime dependency. If it is not completed, the core app and its built-in explanation still work.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+License: [MIT](LICENSE).
